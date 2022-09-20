@@ -22,9 +22,7 @@ import java.util.logging.Logger;
  * @author giova
  */
 public class vista extends javax.swing.JFrame {
-    Socket server = null;
-    DataInputStream dis = null;
-    DataOutputStream dos = null;
+    
     /**
      * Creates new form vista
      */
@@ -43,7 +41,7 @@ public class vista extends javax.swing.JFrame {
     private void initComponents() {
 
         consultar = new javax.swing.JButton();
-        REGISTRAR = new javax.swing.JButton();
+        registrar = new javax.swing.JButton();
         mascota = new javax.swing.JTextField();
         propietario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -61,10 +59,10 @@ public class vista extends javax.swing.JFrame {
             }
         });
 
-        REGISTRAR.setText("REGISTRAR");
-        REGISTRAR.addActionListener(new java.awt.event.ActionListener() {
+        registrar.setText("REGISTRAR");
+        registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                REGISTRARActionPerformed(evt);
+                registrarActionPerformed(evt);
             }
         });
 
@@ -82,6 +80,7 @@ public class vista extends javax.swing.JFrame {
         jLabel4.setText("MASCOTAS PETS");
 
         aceptar.setText("ACEPTAR");
+        aceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aceptarActionPerformed(evt);
@@ -109,7 +108,7 @@ public class vista extends javax.swing.JFrame {
                                         .addComponent(jLabel4)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(REGISTRAR)
+                                    .addComponent(registrar)
                                     .addComponent(aceptar)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(mascota, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,7 +131,7 @@ public class vista extends javax.swing.JFrame {
                             .addComponent(mascota, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(REGISTRAR)
+                            .addComponent(registrar)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(consultar)))
@@ -155,22 +154,7 @@ public class vista extends javax.swing.JFrame {
 
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
         mascota.setText("");
-        conectar cc =new conectar();
-        Connection cn = cc.conexion();
         
-        String msg = propietario.getText();
-        String slq="SELECT * FROM `afiliados` WHERE `propietario` LIKE '%" + propietario.getText() + "%'";
-        try {
-        PreparedStatement pst= cn.prepareStatement(slq);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()){
-                String mensaje= rs.getString(1);
-                propietario.setText(mensaje);
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(vista.class.getName()).log(Level.SEVERE,null,ex);
-        } 
     }//GEN-LAST:event_consultarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
@@ -179,36 +163,14 @@ public class vista extends javax.swing.JFrame {
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         propietario.requestFocus();
-        conectar cc =new conectar();
-        Connection cn = cc.conexion();
-
-        String prop = propietario.getText();
-        String masc = mascota.getText();
-        String slq;
-        slq = "INSERT INTO afiliados (mascota,propietario) VALUES (?)(?)";
-        try {
-        PreparedStatement pst= cn.prepareStatement(slq);
-        pst.setString(1, masc);
-        pst.setString(2, prop);
-        pst.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(vista.class.getName()).log(Level.SEVERE,null,ex);
-        } 
-        //fin de subir a base de datos 
-        
-        
-        try {
-            dos.writeUTF(propietario.getText());
-        } catch (IOException ex) {
-            Logger.getLogger(vista.class.getName()).log(Level.SEVERE,null,ex);
-        }                                         
+                                                 
 
     }//GEN-LAST:event_aceptarActionPerformed
 
-    private void REGISTRARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGISTRARActionPerformed
+    private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
         aceptar.setEnabled(true);
         consultar.setEnabled(false);
-    }//GEN-LAST:event_REGISTRARActionPerformed
+    }//GEN-LAST:event_registrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,14 +208,14 @@ public class vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton REGISTRAR;
-    private javax.swing.JButton aceptar;
-    private javax.swing.JButton consultar;
+    public javax.swing.JButton aceptar;
+    public javax.swing.JButton consultar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField mascota;
-    private javax.swing.JTextField propietario;
+    public javax.swing.JTextField mascota;
+    public javax.swing.JTextField propietario;
+    public javax.swing.JButton registrar;
     private javax.swing.JButton salir;
     // End of variables declaration//GEN-END:variables
 }
