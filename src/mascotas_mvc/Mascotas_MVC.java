@@ -5,6 +5,10 @@
  */
 package mascotas_mvc;
 
+import controlador.controlador;
+import modelo.modelo;
+import vista.vista;
+
 /**
  *
  * @author giova
@@ -15,7 +19,12 @@ public class Mascotas_MVC {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        modelo mod = new modelo();
+        vista view = new vista();
+        
+        controlador ctrl = new controlador(view, mod);
+        ctrl.iniciar();
+        view.setVisible(true);
     }
     
 }
